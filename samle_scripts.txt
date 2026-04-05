@@ -1,0 +1,132 @@
+Below are **3 updated call center conversations (~1.5 min each)** with **Agent and Customer names included in brackets**.
+Useful for **speech datasets, AI evaluation, role play, or Whisper testing** 🎧🤖
+
+---
+
+# 1️⃣ Internet Not Working Complaint
+
+**Agent (Rahul)** and **Customer (Amit)**
+
+**Rahul:** Thank you for calling SwiftNet customer support. My name is Rahul. How may I assist you today?
+
+**Amit:** Hi Rahul, my internet has not been working since morning. I have restarted the router but still no connection.
+
+**Rahul:** I’m sorry for the inconvenience, Amit. Let me check that for you. May I have your registered mobile number?
+
+**Amit:** Yes, it is 9876543210.
+
+**Rahul:** Thank you. I can see there is a service outage reported in your area due to maintenance work.
+
+**Amit:** Oh okay… but I have an important meeting in 30 minutes.
+
+**Rahul:** I understand how important that is. The expected resolution time is within the next 45 minutes.
+
+**Amit:** Is there anything I can do meanwhile?
+
+**Rahul:** Yes, you may try connecting through mobile hotspot temporarily. Also, I will mark your connection as priority so it gets restored quickly.
+
+**Amit:** That would be helpful, thank you.
+
+**Rahul:** You’re welcome. I will also send you an SMS once the issue is resolved.
+
+**Amit:** Great, appreciate the support.
+
+**Rahul:** Is there anything else I can help you with today?
+
+**Amit:** No, that’s all.
+
+**Rahul:** Thank you for calling SwiftNet. Have a great day!
+
+---
+
+# 2️⃣ Credit Card Wrong Charge Issue
+
+**Agent (Neha)** and **Customer (Rajesh)**
+
+**Neha:** Good afternoon, thank you for calling FinTrust Bank. This is Neha speaking. How may I help you?
+
+**Rajesh:** Hi Neha, I noticed an unknown charge of 4,500 rupees on my credit card yesterday.
+
+**Neha:** I understand your concern, Rajesh. Let me help you with that. Could you please confirm the last four digits of your card?
+
+**Rajesh:** Yes, it is 2345.
+
+**Neha:** Thank you. I can see a transaction from an online shopping website. Did you make any purchase recently?
+
+**Rajesh:** No, I did not make this transaction.
+
+**Neha:** Alright, I will block your card immediately to prevent further unauthorized usage.
+
+**Rajesh:** Yes please, block it.
+
+**Neha:** Done. I will also raise a dispute request for this transaction.
+
+**Rajesh:** How long will it take to get the refund?
+
+**Neha:** Usually it takes 5 to 7 working days for investigation.
+
+**Rajesh:** Okay, will I get a new card?
+
+**Neha:** Yes, a replacement card will be delivered within 4 working days.
+
+**Rajesh:** Thank you for quick help.
+
+**Neha:** You’re welcome. Your complaint reference number is FT98231.
+
+**Rajesh:** Noted.
+
+**Neha:** Thank you for calling FinTrust Bank. Have a safe day.
+
+---
+
+# 3️⃣ E-commerce Product Return Request
+
+**Agent (Priya)** and **Customer (Sneha)**
+
+**Priya:** Hello, thank you for contacting ShopEasy support. My name is Priya. How may I assist you today?
+
+**Sneha:** Hi Priya, I received a damaged product yesterday and I would like to return it.
+
+**Priya:** I’m really sorry to hear that, Sneha. Could you please provide your order number?
+
+**Sneha:** Yes, the order number is SE458921.
+
+**Priya:** Thank you. May I know what issue you found with the product?
+
+**Sneha:** The item is a wireless headphone, but the left side speaker is not working.
+
+**Priya:** I apologize for the inconvenience caused. I will arrange a return pickup for you.
+
+**Sneha:** Do I need to pack the product?
+
+**Priya:** Yes, please keep the product in its original packaging if possible.
+
+**Sneha:** When will the pickup happen?
+
+**Priya:** The pickup will be scheduled within the next 24 hours.
+
+**Sneha:** Will I get refund or replacement?
+
+**Priya:** You can choose either option. Which would you prefer?
+
+**Sneha:** I prefer a replacement.
+
+**Priya:** Noted. The replacement will be shipped once the returned product is picked up.
+
+**Sneha:** Thank you for the support.
+
+**Priya:** You’re welcome. Is there anything else I can assist you with?
+
+**Sneha:** No, that’s all.
+
+**Priya:** Thank you for choosing ShopEasy. Have a great day!
+
+---
+
+If you want, I can also:
+
+* convert into **A/B labeled dataset**
+* generate **10 more conversations**
+* create **.md, .csv, .json dataset**
+* include **3 speakers conversation**
+* add **timestamps for audio generation** 🎙️

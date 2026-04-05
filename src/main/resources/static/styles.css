@@ -74,9 +74,24 @@ button:hover {
     background: #1d4ed8;
 }
 
-.conversation-settings {
+.conversation-picker {
+    max-width: 420px;
+    margin-bottom: 0.75rem;
+}
+
+.conversation-card {
+    display: none;
     border-top: 1px solid #e5e7eb;
     margin-top: 0.75rem;
     padding-top: 0.75rem;
 }
 
+.conversation-card.is-active {
+    display: block;
+}
+
+.conversation-settings {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+}

@@ -14,21 +14,49 @@
     </header>
 
     <section class="panel">
-        <h2>Generate all conversations</h2>
-        <form method="post" th:action="@{/generate-all}">
-            <label>
-                TTS model
-                <select name="model">
-                    <option th:each="m : ${ttsModels}" th:value="${m}" th:text="${m}" th:selected="${m == defaultModel}"></option>
-                </select>
-            </label>
+        <h2>Generate one conversation</h2>
+        <label class="conversation-picker">
+            Select conversation
+            <select id="conversationSelect">
+                <option th:each="conversation : ${conversations}"
+                        th:value="${conversation.id}"
+                        th:text="${conversation.title}"></option>
+            </select>
+        </label>
 
-            <div th:each="conversation : ${conversations}" class="conversation-settings">
-                <h3 th:text="${conversation.title}"></h3>
+        <div th:each="conversation : ${conversations}"
+             class="conversation-card"
+             th:attr="data-conversation-id=${conversation.id}">
+            <h3 th:text="${conversation.title}"></h3>
+            <p th:text="${conversation.description}"></p>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Speaker</th>
+                    <th>Line</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="line : ${conversation.lines}">
+                    <td th:text="${line.speaker}"></td>
+                    <td th:text="${line.text}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <form method="post" th:action="@{'/generate/' + ${conversation.id}}">
+                <label>
+                    TTS model
+                    <select name="model">
+                        <option th:each="m : ${ttsModels}" th:value="${m}" th:text="${m}" th:selected="${m == defaultModel}"></option>
+                    </select>
+                </label>
+
                 <div class="voice-grid">
                     <label th:each="entry : ${conversation.speakerDefaults().entrySet()}">
                         <span th:text="${entry.key}"></span>
-                        <select th:name="${'voice_' + conversation.id + '__' + entry.key}">
+                        <select th:name="${'voice_' + entry.key}">
                             <option th:each="voice : ${ttsVoices}"
                                     th:value="${voice}"
                                     th:text="${voice}"
@@ -36,55 +64,30 @@
                         </select>
                     </label>
                 </div>
-            </div>
 
-            <button type="submit">Download all as ZIP</button>
-        </form>
-    </section>
-
-    <section class="panel" th:each="conversation : ${conversations}">
-        <h2 th:text="${conversation.title}"></h2>
-        <p th:text="${conversation.description}"></p>
-
-        <table>
-            <thead>
-            <tr>
-                <th>Speaker</th>
-                <th>Line</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="line : ${conversation.lines}">
-                <td th:text="${line.speaker}"></td>
-                <td th:text="${line.text}"></td>
-            </tr>
-            </tbody>
-        </table>
-
-        <form method="post" th:action="@{'/generate/' + ${conversation.id}}">
-            <label>
-                TTS model
-                <select name="model">
-                    <option th:each="m : ${ttsModels}" th:value="${m}" th:text="${m}" th:selected="${m == defaultModel}"></option>
-                </select>
-            </label>
-
-            <div class="voice-grid">
-                <label th:each="entry : ${conversation.speakerDefaults().entrySet()}">
-                    <span th:text="${entry.key}"></span>
-                    <select th:name="${'voice_' + entry.key}">
-                        <option th:each="voice : ${ttsVoices}"
-                                th:value="${voice}"
-                                th:text="${voice}"
-                                th:selected="${voice == entry.value}"></option>
-                    </select>
-                </label>
-            </div>
-
-            <button type="submit">Generate and download MP3</button>
-        </form>
+                <button type="submit">Generate and download MP3</button>
+            </form>
+        </div>
     </section>
 </div>
+
+<script>
+    (function () {
+        const select = document.getElementById("conversationSelect");
+        const cards = document.querySelectorAll(".conversation-card");
+
+        function applySelection() {
+            const selectedId = select.value;
+            cards.forEach((card) => {
+                const shouldShow = card.dataset.conversationId === selectedId;
+                card.classList.toggle("is-active", shouldShow);
+            });
+        }
+
+        select.addEventListener("change", applySelection);
+        applySelection();
+    })();
+</script>
 </body>
 </html>
 

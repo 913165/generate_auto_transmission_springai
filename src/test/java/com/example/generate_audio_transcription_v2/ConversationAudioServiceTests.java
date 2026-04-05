@@ -1,5 +1,10 @@
 package com.example.generate_audio_transcription_v2;
 
+import com.example.generate_audio_transcription_v2.catalog.ConversationCatalog;
+import com.example.generate_audio_transcription_v2.parser.ConversationScriptParser;
+import com.example.generate_audio_transcription_v2.service.ConversationAudioService;
+import com.example.generate_audio_transcription_v2.service.Mp3MergeService;
+import com.example.generate_audio_transcription_v2.tts.SpeechSynthesisClient;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;

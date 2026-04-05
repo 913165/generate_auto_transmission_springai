@@ -1,5 +1,10 @@
 package com.example.generate_audio_transcription_v2;
 
+import com.example.generate_audio_transcription_v2.catalog.ConversationCatalog;
+import com.example.generate_audio_transcription_v2.controller.api.AudioApiController;
+import com.example.generate_audio_transcription_v2.model.ConversationLine;
+import com.example.generate_audio_transcription_v2.model.ConversationScript;
+import com.example.generate_audio_transcription_v2.service.ConversationAudioService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

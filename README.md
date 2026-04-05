@@ -16,13 +16,14 @@ It generates call-center conversation audio (MP3) with OpenAI text-to-speech.
 
 ## Project Structure
 
-- `src/main/java/com/example/generate_audio_transcription_v2/ConversationScriptParser.java`: parses markdown script file
-- `src/main/java/com/example/generate_audio_transcription_v2/ConversationCatalog.java`: dynamic conversation catalog
-- `src/main/java/com/example/generate_audio_transcription_v2/OpenAiSpeechSynthesisClient.java`: OpenAI TTS HTTP client
-- `src/main/java/com/example/generate_audio_transcription_v2/Mp3MergeService.java`: ffmpeg/fallback merge logic
-- `src/main/java/com/example/generate_audio_transcription_v2/ConversationAudioService.java`: synthesis + packaging logic
-- `src/main/java/com/example/generate_audio_transcription_v2/AudioWebController.java`: web endpoints
-- `src/main/java/com/example/generate_audio_transcription_v2/AudioApiController.java`: REST endpoints
+- `src/main/java/com/example/generate_audio_transcription_v2/parser/ConversationScriptParser.java`: parses markdown script file
+- `src/main/java/com/example/generate_audio_transcription_v2/catalog/ConversationCatalog.java`: dynamic conversation catalog
+- `src/main/java/com/example/generate_audio_transcription_v2/tts/OpenAiSpeechSynthesisClient.java`: OpenAI TTS HTTP client
+- `src/main/java/com/example/generate_audio_transcription_v2/service/Mp3MergeService.java`: ffmpeg/fallback merge logic
+- `src/main/java/com/example/generate_audio_transcription_v2/service/ConversationAudioService.java`: synthesis + packaging logic
+- `src/main/java/com/example/generate_audio_transcription_v2/controller/web/AudioWebController.java`: web endpoints
+- `src/main/java/com/example/generate_audio_transcription_v2/controller/api/AudioApiController.java`: REST endpoints
+- `src/main/java/com/example/generate_audio_transcription_v2/model/`: shared model records and constants
 - `src/main/resources/templates/index.html`: UI
 - `src/main/resources/static/styles.css`: page styles
 
@@ -84,4 +85,3 @@ cd C:\Users\tinum\IdeaProjects\generate_audio_transcription_V2
 ```
 
 Note: app startup does not require API key, but generating audio does.
-#

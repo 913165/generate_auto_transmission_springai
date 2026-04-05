@@ -1,5 +1,7 @@
 package com.example.generate_audio_transcription_v2;
 
+import com.example.generate_audio_transcription_v2.model.ConversationScript;
+import com.example.generate_audio_transcription_v2.parser.ConversationScriptParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -31,4 +33,3 @@ class ConversationScriptParserTests {
                 .containsEntry("Amit", "echo");
     }
 }
-

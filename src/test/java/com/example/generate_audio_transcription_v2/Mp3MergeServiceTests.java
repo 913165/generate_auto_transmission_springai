@@ -1,5 +1,6 @@
 package com.example.generate_audio_transcription_v2;
 
+import com.example.generate_audio_transcription_v2.service.Mp3MergeService;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -21,4 +22,3 @@ class Mp3MergeServiceTests {
         assertThat(new String(merged, StandardCharsets.UTF_8)).isEqualTo("part-1part-2");
     }
 }
-

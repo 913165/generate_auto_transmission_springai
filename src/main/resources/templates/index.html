@@ -45,7 +45,9 @@
                 </tbody>
             </table>
 
-            <form method="post" th:action="@{'/generate/' + ${conversation.id}}">
+            <form class="generate-form"
+                  th:action="@{'/generate/' + ${conversation.id}}"
+                  th:data-filename="${conversation.id + '.mp3'}">
                 <label>
                     TTS model
                     <select name="model">
@@ -65,28 +67,136 @@
                     </label>
                 </div>
 
-                <button type="submit">Generate and download MP3</button>
+                <button type="submit">🎙️ Generate and download MP3</button>
+
+                <div class="progress-wrap" aria-live="polite">
+                    <div class="progress-track">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <p class="progress-text"></p>
+                </div>
+
+                <div class="result-area"></div>
             </form>
         </div>
     </section>
 </div>
 
 <script>
-    (function () {
-        const select = document.getElementById("conversationSelect");
-        const cards = document.querySelectorAll(".conversation-card");
+(function () {
+    /* ── Conversation dropdown ─────────────────────────────── */
+    const select = document.getElementById("conversationSelect");
+    const cards  = document.querySelectorAll(".conversation-card");
 
-        function applySelection() {
-            const selectedId = select.value;
-            cards.forEach((card) => {
-                const shouldShow = card.dataset.conversationId === selectedId;
-                card.classList.toggle("is-active", shouldShow);
-            });
+    function applySelection() {
+        const id = select.value;
+        cards.forEach(c => c.classList.toggle("is-active", c.dataset.conversationId === id));
+    }
+    select.addEventListener("change", applySelection);
+    applySelection();
+
+    /* ── Progress helpers ─────────────────────────────────── */
+    function showProgress(form, msg) {
+        const wrap = form.querySelector(".progress-wrap");
+        const bar  = form.querySelector(".progress-bar");
+        const txt  = form.querySelector(".progress-text");
+        wrap.classList.add("is-active");
+        bar.classList.remove("progress-bar--done", "progress-bar--error");
+        bar.style.width = "0%";
+        txt.textContent = msg || "Generating audio… please wait.";
+        return { wrap, bar, txt };
+    }
+
+    function animateIndeterminate(bar) {
+        bar.classList.add("progress-bar--indeterminate");
+    }
+
+    function finishProgress(wrap, bar, txt, ok, filename) {
+        bar.classList.remove("progress-bar--indeterminate");
+        bar.style.width = "100%";
+        bar.classList.add(ok ? "progress-bar--done" : "progress-bar--error");
+        txt.textContent = ok
+            ? "✅ Done! " + filename + " is downloading."
+            : "❌ Generation failed. Please check your API key and try again.";
+        if (!ok) {
+            setTimeout(() => {
+                wrap.classList.remove("is-active");
+                bar.style.width = "0%";
+                bar.classList.remove("progress-bar--error");
+                txt.textContent = "";
+            }, 4000);
         }
+    }
 
-        select.addEventListener("change", applySelection);
-        applySelection();
-    })();
+    /* ── Form submit via Fetch ───────────────────────────── */
+    document.querySelectorAll(".generate-form").forEach(form => {
+        const btn = form.querySelector("button[type='submit']");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const action   = form.getAttribute("action");
+            const filename = form.dataset.filename || "audio.mp3";
+            const data     = new FormData(form);
+
+            btn.disabled = true;
+            const { wrap, bar, txt } = showProgress(form, "Generating audio… please wait.");
+            animateIndeterminate(bar);
+
+            try {
+                const resp = await fetch(action, {
+                    method: "POST",
+                    body: new URLSearchParams(data)
+                });
+
+                if (!resp.ok) {
+                    const errText = await resp.text();
+                    console.error("Server error:", errText);
+                    finishProgress(wrap, bar, txt, false, filename);
+                    return;
+                }
+
+                // Parse filename from Content-Disposition header
+                let dlName = filename;
+                const cd = resp.headers.get("Content-Disposition");
+                if (cd) {
+                    // Try filename*=UTF-8''encoded-name first (RFC 5987)
+                    const extMatch = cd.match(/filename\*\s*=\s*UTF-8''([^;\s]+)/i);
+                    if (extMatch) {
+                        dlName = decodeURIComponent(extMatch[1]);
+                    } else {
+                        // Fall back to plain filename="name" or filename=name
+                        const plainMatch = cd.match(/filename\s*=\s*"?([^";\r\n]+)"?/i);
+                        if (plainMatch) {
+                            dlName = plainMatch[1].trim();
+                        }
+                    }
+                }
+                // Always ensure .mp3 extension
+                if (!dlName.toLowerCase().endsWith(".mp3")) {
+                    dlName = dlName.replace(/\.[^.]+$/, "") + ".mp3";
+                }
+
+                const blob = await resp.blob();
+                const url  = URL.createObjectURL(blob);
+                const a    = document.createElement("a");
+                a.href     = url;
+                a.download = dlName;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+                finishProgress(wrap, bar, txt, true, dlName);
+            } catch (err) {
+                console.error("Fetch error:", err);
+                finishProgress(wrap, bar, txt, false, filename);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    });
+})();
 </script>
 </body>
 </html>

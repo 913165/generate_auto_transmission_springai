@@ -4,7 +4,6 @@ import com.example.generate_audio_transcription_v2.catalog.ConversationCatalog;
 import com.example.generate_audio_transcription_v2.model.ConversationScript;
 import com.example.generate_audio_transcription_v2.model.TtsOptions;
 import com.example.generate_audio_transcription_v2.service.ConversationAudioService;
-import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -98,12 +95,11 @@ public class AudioWebController {
     }
 
     private ResponseEntity<byte[]> asDownload(byte[] data, String fileName, MediaType mediaType) {
-        ContentDisposition disposition = ContentDisposition.attachment()
-                .filename(fileName, StandardCharsets.UTF_8)
-                .build();
+        // Use plain ASCII filename= (no charset encoding) so browsers can read it without decoding
+        String disposition = "attachment; filename=\"" + fileName + "\"";
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, disposition.toString())
+                .header(HttpHeaders.CONTENT_DISPOSITION, disposition)
                 .contentType(mediaType)
                 .contentLength(data.length)
                 .body(data);
